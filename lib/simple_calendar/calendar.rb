@@ -31,7 +31,7 @@ module SimpleCalendar
     def td_classes_for(day)
       today = Time.zone.now.to_date
 
-      td_class = ["closed"]
+      td_class = ["day"]
       td_class << "wday-#{day.wday.to_s}"
       td_class << "today"         if today == day
       td_class << "past"          if today > day
@@ -41,6 +41,7 @@ module SimpleCalendar
       td_class << "next-month"    if start_date.month != day.month && day > start_date
       td_class << "current-month" if start_date.month == day.month
       td_class << "has-events"    if sorted_events.fetch(day, []).any?
+      td_class << "closed"
 
       td_class
     end
