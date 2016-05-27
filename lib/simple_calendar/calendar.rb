@@ -31,7 +31,7 @@ module SimpleCalendar
     def td_classes_for(day)
       today = Time.zone.now.to_date
 
-      td_class = ["day closed"]
+      td_class = ["closed"]
       td_class << "wday-#{day.wday.to_s}"
       td_class << "today"         if today == day
       td_class << "past"          if today > day
