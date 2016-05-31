@@ -28,20 +28,24 @@ module SimpleCalendar
       )
     end
 
-    def td_classes_for(day)
+    def td_classes_for(day,status)
       today = Time.zone.now.to_date
 
       td_class = ["day"]
       td_class << "wday-#{day.wday.to_s}"
-      td_class << "today"         if today == day
-      td_class << "past"          if today > day
-      td_class << "future"        if today < day
-      td_class << 'start-date'    if day.to_date == start_date.to_date
-      td_class << "prev-month"    if start_date.month != day.month && day < start_date
-      td_class << "next-month"    if start_date.month != day.month && day > start_date
-      td_class << "current-month" if start_date.month == day.month
-      td_class << "has-events"    if sorted_events.fetch(day, []).any?
-      td_class << "closed"
+      td_class << "today"           if today == day
+      td_class << "past"            if today > day
+      td_class << "future"          if today < day
+      td_class << 'start-date'      if day.to_date == start_date.to_date
+      td_class << "prev-month"      if start_date.month != day.month && day < start_date
+      td_class << "next-month"      if start_date.month != day.month && day > start_date
+      td_class << "current-month"   if start_date.month == day.month
+      td_class << "has-events"      if sorted_events.fetch(day, []).any?
+      td_class << "closed"          if status == "closed"
+      td_class << "available"       if status == "available" && day.beginning_of_day >= Date.current.beginning_of_day
+      td_class << "partially_avail" if status == "partially_avail" && day.beginning_of_day >= Date.current.beginning_of_day
+      td_class << "booked"          if status == "booked" && day.beginning_of_day >= Date.current.beginning_of_day
+      td_class << "selected"        if status == "selected"
 
       td_class
     end
